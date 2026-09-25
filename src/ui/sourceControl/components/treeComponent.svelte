@@ -152,7 +152,7 @@
                             {#if fileType == FileType.staged}
                                 <div
                                     data-icon="minus"
-                                    aria-label="Unstage"
+                                    aria-label="ステージを解除"
                                     onclick={(event) =>
                                         unstage(event, entity.path)}
                                     class="clickable-icon"
@@ -178,7 +178,7 @@
                             {:else if fileType == FileType.changed}
                                 <div
                                     data-icon="undo"
-                                    aria-label="Discard"
+                                    aria-label="変更を破棄"
                                     onclick={(event) => discard(event, entity)}
                                     class="clickable-icon"
                                 >
@@ -200,7 +200,7 @@
                                 </div>
                                 <div
                                     data-icon="plus"
-                                    aria-label="Stage"
+                                    aria-label="ステージ"
                                     onclick={(event) =>
                                         stage(event, entity.path)}
                                     class="clickable-icon"

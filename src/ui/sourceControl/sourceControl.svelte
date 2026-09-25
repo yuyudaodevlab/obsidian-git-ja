@@ -131,25 +131,25 @@
     });
 
     function getCommitActionDescription(sync: boolean): string {
-        const suffix = sync ? " and sync" : "";
+        const suffix = sync ? "して同期" : "";
         if (hasConflicts) {
-            return "Resolve conflicts before committing";
+            return "コミットする前に競合を解決する。";
         }
         if (!hasChanges) {
             return sync
-                ? "Sync (no changes to commit)"
-                : "No changes to commit";
+                ? "同期（コミットする変更なし）"
+                : "コミットする変更なし";
         }
         if (sync) {
-            return "Commit all changes and sync";
+            return "すべての変更をコミットして同期";
         }
         if (stagedCount > 0) {
-            return `Commit ${stagedCount} staged ${stagedCount === 1 ? "file" : "files"}${suffix}`;
+            return `ステージ済みの「${stagedCount}」ファイルをコミット${suffix}`;
         }
         if (!plugin.settings.autoStageOnEmptyIndex) {
-            return "Nothing staged — stage changes before committing";
+            return "コミットする前に変更をステージする。";
         }
-        return `Stage and commit all ${changedCount} changed ${changedCount === 1 ? "file" : "files"}${suffix}`;
+        return `変更した「${changedCount}」ファイルをすべてステージしてコミット${suffix}`;
     }
 
     function canCommit(mode: CommitMode): boolean {
@@ -220,21 +220,21 @@
         const menu = Menu.forEvent(event);
         menu.addItem((item) =>
             item
-                .setTitle("Commit staged")
+                .setTitle("ステージ済みの変更をコミット")
                 .setIcon("git-commit")
                 .setDisabled(!canCommit("staged"))
                 .onClick(() => commit("staged"))
         );
         menu.addItem((item) =>
             item
-                .setTitle("Stage all and commit")
+                .setTitle("すべてステージしてコミット")
                 .setIcon("list-plus")
                 .setDisabled(!canCommit("all"))
                 .onClick(() => commit("all"))
         );
         menu.addItem((item) =>
             item
-                .setTitle("Amend staged")
+                .setTitle("ステージ済みの変更で直前のコミットを修正")
                 .setIcon("git-commit")
                 .setDisabled(!canCommit("staged"))
                 .onClick(amendStaged)
@@ -242,7 +242,7 @@
         menu.addSeparator();
         menu.addItem((item) =>
             item
-                .setTitle("Commit staged and sync")
+                .setTitle("ステージ済みの変更をコミットして同期")
                 .setIcon("arrow-up-circle")
                 .setDisabled(!canCommit("staged"))
                 .onClick(() => commitAndSync("staged"))
@@ -419,7 +419,7 @@
                     id="commit-menu"
                     data-icon="chevron-down"
                     class="clickable-icon nav-action-button"
-                    aria-label="More commit actions"
+                    aria-label="その他のコミット操作"
                     bind:this={buttons[10]}
                     onclick={showCommitMenu}
                 ></div>
@@ -428,7 +428,7 @@
                 id="stage-all"
                 class="clickable-icon nav-action-button"
                 data-icon="plus-circle"
-                aria-label="Stage all"
+                aria-label="すべてステージ"
                 bind:this={buttons[2]}
                 onclick={stageAll}
             ></div>
@@ -436,7 +436,7 @@
                 id="unstage-all"
                 class="clickable-icon nav-action-button"
                 data-icon="minus-circle"
-                aria-label="Unstage all"
+                aria-label="すべてのステージを解除"
                 bind:this={buttons[3]}
                 onclick={unstageAll}
             ></div>
@@ -444,7 +444,7 @@
                 id="push"
                 class="clickable-icon nav-action-button"
                 data-icon="upload"
-                aria-label="Push"
+                aria-label="プッシュ"
                 bind:this={buttons[4]}
                 onclick={push}
             ></div>
@@ -452,14 +452,14 @@
                 id="pull"
                 class="clickable-icon nav-action-button"
                 data-icon="download"
-                aria-label="Pull"
+                aria-label="プル"
                 bind:this={buttons[5]}
                 onclick={pull}
             ></div>
             <div
                 id="layoutChange"
                 class="clickable-icon nav-action-button"
-                aria-label="Change Layout"
+                aria-label="レイアウトを切り替える"
                 data-icon={showTree ? "list" : "folder"}
                 bind:this={buttons[6]}
                 onclick={() => {
@@ -474,7 +474,7 @@
                 class="clickable-icon nav-action-button"
                 class:loading
                 data-icon="refresh-cw"
-                aria-label="Refresh"
+                aria-label="更新"
                 bind:this={buttons[7]}
                 onclick={triggerRefresh}
             ></div>
@@ -483,7 +483,7 @@
                     id="merge-status"
                     class="clickable-icon nav-action-button merge-status"
                     data-icon="git-merge"
-                    aria-label="Merge in progress — select for help"
+                    aria-label="マージ中（選択して手順を表示）"
                     bind:this={buttons[11]}
                     onclick={() => plugin.openMergeConflictHelp()}
                 ></div>
@@ -495,13 +495,13 @@
             {rows}
             class="commit-msg-input"
             spellcheck="true"
-            placeholder="Commit Message"
+            placeholder="コミットメッセージ"
             bind:value={commitMessage}></textarea>
         {#if commitMessage}
             <div
                 class="git-commit-msg-clear-button"
                 onclick={() => (commitMessage = "")}
-                aria-label={"Clear"}
+                aria-label={"消去"}
             ></div>
         {/if}
     </div>
@@ -535,7 +535,7 @@
                         >
                     </div>
                     <div class="tree-item-inner nav-folder-title-content">
-                        Conflicts
+                        競合
                     </div>
                     <div class="git-tools">
                         <div class="files-count">
@@ -602,14 +602,14 @@
                             >
                         </div>
                         <div class="tree-item-inner nav-folder-title-content">
-                            Staged Changes
+                            ステージ済みの変更
                         </div>
 
                         <div class="git-tools">
                             <div class="buttons">
                                 <div
                                     data-icon="minus"
-                                    aria-label="Unstage"
+                                    aria-label="ステージを解除"
                                     bind:this={buttons[8]}
                                     onclick={unstageAll}
                                     class="clickable-icon"
@@ -693,13 +693,13 @@
                         </div>
 
                         <div class="tree-item-inner nav-folder-title-content">
-                            Changes
+                            変更
                         </div>
                         <div class="git-tools">
                             <div class="buttons">
                                 <div
                                     data-icon="undo"
-                                    aria-label="Discard"
+                                    aria-label="変更を破棄"
                                     onclick={discard}
                                     class="clickable-icon"
                                 >
@@ -721,7 +721,7 @@
                                 </div>
                                 <div
                                     data-icon="plus"
-                                    aria-label="Stage"
+                                    aria-label="ステージ"
                                     bind:this={buttons[9]}
                                     onclick={stageAll}
                                     class="clickable-icon"
@@ -814,7 +814,7 @@
                             <div
                                 class="tree-item-inner nav-folder-title-content"
                             >
-                                Recently Pulled Files
+                                最近プルしたファイル
                             </div>
 
                             <span class="tree-item-flair"

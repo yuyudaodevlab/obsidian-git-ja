@@ -111,7 +111,7 @@
                 {#if fileOpenableInObsidian(change.vaultPath, view.app)}
                     <div
                         data-icon="go-to-file"
-                        aria-label="Open File"
+                        aria-label="ファイルを開く"
                         bind:this={buttons[0]}
                         onclick={open}
                         class="clickable-icon"
@@ -119,7 +119,7 @@
                 {/if}
                 <div
                     data-icon="minus"
-                    aria-label="Unstage"
+                    aria-label="ステージを解除"
                     bind:this={buttons[1]}
                     onclick={unstage}
                     class="clickable-icon"

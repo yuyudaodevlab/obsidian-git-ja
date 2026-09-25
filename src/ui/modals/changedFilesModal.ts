@@ -10,9 +10,7 @@ export class ChangedFilesModal extends FuzzySuggestModal<FileStatusResult> {
         super(plugin.app);
         this.plugin = plugin;
         this.changedFiles = changedFiles;
-        this.setPlaceholder(
-            "Not supported files will be opened by default app!"
-        );
+        this.setPlaceholder("未対応のファイルは既定のアプリで開く。");
     }
 
     getItems(): FileStatusResult[] {
@@ -21,15 +19,15 @@ export class ChangedFilesModal extends FuzzySuggestModal<FileStatusResult> {
 
     getItemText(item: FileStatusResult): string {
         if (item.index == "U" && item.workingDir == "U") {
-            return `Untracked | ${item.vaultPath}`;
+            return `未追跡 | ${item.vaultPath}`;
         }
 
         let workingDir = "";
         let index = "";
 
         if (item.workingDir != " ")
-            workingDir = `Working Dir: ${item.workingDir} `;
-        if (item.index != " ") index = `Index: ${item.index}`;
+            workingDir = `作業ディレクトリー： ${item.workingDir} `;
+        if (item.index != " ") index = `インデックス： ${item.index}`;
 
         return `${workingDir}${index} | ${item.vaultPath}`;
     }

@@ -29,7 +29,7 @@ export async function openLineInGitHub(
             );
         }
     } else {
-        new Notice("It seems like you are not using GitHub");
+        new Notice("このリモートはGitHubではないようです。");
     }
 }
 
@@ -48,7 +48,7 @@ export async function openHistoryInGitHub(file: TFile, manager: GitManager) {
             `https://github.com/${user}/${repo}/commits/${branch}/${filePath}`
         );
     } else {
-        new Notice("It seems like you are not using GitHub");
+        new Notice("このリモートはGitHubではないようです。");
     }
 }
 

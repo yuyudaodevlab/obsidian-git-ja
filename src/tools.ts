@@ -63,11 +63,11 @@ export default class Tools {
 
             if (tooBigFiles.length > 0) {
                 this.plugin.displayError(
-                    `Aborted commit, because the following files are too big:\n- ${tooBigFiles
+                    `次のファイルが大きすぎるため、コミットを中止しました。\n- ${tooBigFiles
                         .map((e) => e.vaultPath)
                         .join(
                             "\n- "
-                        )}\nPlease remove them or add to .gitignore.`
+                        )}\nファイルを削除するか、.gitignoreに追加してください。`
                 );
 
                 return true;
@@ -137,7 +137,7 @@ export default class Tools {
         if (command === undefined) return;
 
         this.plugin.promiseQueue.addTask(async () => {
-            const notice = new Notice(`Running '${command}'...`, 999_999);
+            const notice = new Notice(`「${command}」を実行中…`, 999_999);
 
             try {
                 const res = await gitManager.rawCommand(command);

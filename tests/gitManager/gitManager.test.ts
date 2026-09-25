@@ -196,11 +196,11 @@ describe.each(gitManagerBackends)("$name GitManager contract", (backend) => {
         await expect(manager.canPush()).resolves.toBe(false);
         await expect(manager.pull()).resolves.toBeUndefined();
         expect(plugin.displayError).toHaveBeenCalledWith(
-            "No current branch found. Cannot pull."
+            "現在のブランチが見つからないため、プルできない。"
         );
         await expect(manager.push()).resolves.toBeUndefined();
         expect(plugin.displayError).toHaveBeenCalledWith(
-            "No current branch found. Cannot push."
+            "現在のブランチが見つからないため、プッシュできない。"
         );
     });
 

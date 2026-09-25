@@ -143,9 +143,9 @@ function createTooltip(
         return btn;
     };
 
-    const closeBtn = makeButton("x", "Close hunk");
-    const stageBtn = makeButton("plus", "Stage hunk");
-    const resetBtn = makeButton("undo", "Reset hunk");
+    const closeBtn = makeButton("x", "変更ブロックのプレビューを閉じる");
+    const stageBtn = makeButton("plus", "変更ブロックをステージ");
+    const resetBtn = makeButton("undo", "変更ブロックを破棄");
 
     toolbar.appendChild(closeBtn);
     toolbar.appendChild(stageBtn);

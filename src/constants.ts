@@ -72,30 +72,30 @@ export const DEFAULT_SETTINGS: ObsidianGitSettings = {
 
 export const SOURCE_CONTROL_VIEW_CONFIG = {
     type: "git-view",
-    name: "Source Control",
+    name: "ソース管理",
     icon: "git-pull-request",
 };
 
 export const HISTORY_VIEW_CONFIG = {
     type: "git-history-view",
-    name: "History",
+    name: "履歴",
     icon: "history",
 };
 
 export const READ_ONLY_FILE_VIEW_CONFIG = {
     type: "git-read-only-file-view",
-    name: "File at commit",
+    name: "コミット時点のファイル",
     icon: "file-clock",
 };
 
 export const SPLIT_DIFF_VIEW_CONFIG = {
     type: "split-diff-view",
-    name: "Diff view",
+    name: "差分ビュー",
     icon: "diff",
 };
 export const DIFF_VIEW_CONFIG = {
     type: "diff-view",
-    name: "Diff View",
+    name: "差分ビュー",
     icon: "git-pull-request",
 };
 

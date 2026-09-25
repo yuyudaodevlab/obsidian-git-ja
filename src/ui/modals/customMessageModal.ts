@@ -8,7 +8,7 @@ export class CustomMessageModal extends SuggestModal<string> {
     constructor(private readonly plugin: ObsidianGit) {
         super(plugin.app);
         this.setPlaceholder(
-            "Type your message and select optional the version with the added date."
+            "メッセージを入力し、必要に応じて日付付きの候補を選ぶ"
         );
     }
 

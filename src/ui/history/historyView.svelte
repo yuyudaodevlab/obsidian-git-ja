@@ -107,7 +107,7 @@
                 id="layoutChange"
                 class="clickable-icon nav-action-button"
                 data-icon={showTree ? "list" : "folder"}
-                aria-label="Change Layout"
+                aria-label="レイアウトを切り替える"
                 bind:this={buttons[0]}
                 onclick={() => {
                     showTree = !showTree;
@@ -121,7 +121,7 @@
                 class="clickable-icon nav-action-button"
                 class:loading
                 data-icon="refresh-cw"
-                aria-label="Refresh"
+                aria-label="更新"
                 bind:this={buttons[1]}
                 onclick={triggerRefresh}
             ></div>

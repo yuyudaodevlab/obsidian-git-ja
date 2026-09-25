@@ -25,6 +25,7 @@ import type {
 } from "../types";
 import { GitOperation, type DiffFile } from "../types";
 import { GeneralModal } from "../ui/modals/generalModal";
+import { gitProgressText } from "../ui/gitProgressText";
 import { splitRemoteBranch, worthWalking } from "../utils";
 import { GitManager } from "./gitManager";
 import { MyAdapter } from "./myAdapter";
@@ -89,15 +90,14 @@ export class IsomorphicGit extends GitManager {
             },
             onAuthFailure: async () => {
                 new Notice(
-                    "Authentication failed. Please try with different credentials"
+                    "認証に失敗しました。別の認証情報で試してください。"
                 );
                 const username = await new GeneralModal(this.plugin, {
-                    placeholder: "Specify your username",
+                    placeholder: "ユーザー名を入力",
                 }).openAndGetResult();
                 if (username) {
                     const password = await new GeneralModal(this.plugin, {
-                        placeholder:
-                            "Specify your password/personal access token",
+                        placeholder: "パスワード／個人アクセストークンを入力",
                         obscure: true,
                     }).openAndGetResult();
                     if (password) {
@@ -178,7 +178,7 @@ export class IsomorphicGit extends GitManager {
         let notice: Notice | undefined;
         const timeout = window.setTimeout(() => {
             notice = new Notice(
-                "This takes longer: Getting status",
+                "状態の取得に時間がかかっています…",
                 this.noticeLength
             );
         }, 20000);
@@ -497,14 +497,14 @@ export class IsomorphicGit extends GitManager {
     }
 
     getProgressText(action: string, event: GitProgressEvent): string {
-        let out = `${action} progress:`;
+        let out = `${gitProgressText(action)}：`;
         if (event.phase) {
-            out = `${out} ${event.phase}:`;
+            out = `${out} ${gitProgressText(event.phase)}:`;
         }
         if (event.loaded) {
             out = `${out} ${event.loaded}`;
             if (event.total) {
-                out = `${out} of ${event.total}`;
+                out = `${out} / ${event.total}`;
             }
         }
         return out;
@@ -515,7 +515,7 @@ export class IsomorphicGit extends GitManager {
     }
 
     async pull(): Promise<FileStatusResult[] | undefined> {
-        const progressNotice = this.showNotice("Initializing pull");
+        const progressNotice = this.showNotice("プルを準備中…");
         return this.withGitOperation(GitOperation.pull, async () => {
             let mergeState:
                 | { ours: string; theirs: string; message: string }
@@ -523,14 +523,14 @@ export class IsomorphicGit extends GitManager {
             try {
                 if (await this.isMergeInProgress()) {
                     throw new Error(
-                        "Cannot pull because a merge is still in progress. Commit or abort it first."
+                        "マージ中のためプルできません。先にマージをコミットするか、中止してください。"
                     );
                 }
                 const branchInfo = await this.branchInfo();
                 if (!branchInfo.current) {
                     progressNotice?.hide();
                     this.plugin.displayError(
-                        "No current branch found. Cannot pull."
+                        "現在のブランチが見つからないため、プルできない。"
                     );
                     return undefined;
                 }
@@ -627,7 +627,7 @@ export class IsomorphicGit extends GitManager {
                     upstreamCommit
                 );
 
-                this.showNotice("Finished pull", false);
+                this.showNotice("プルが完了した。", false);
 
                 return changedFiles.map<FileStatusResult>((file) => ({
                     path: file.path,
@@ -651,7 +651,7 @@ export class IsomorphicGit extends GitManager {
     }
 
     async push(): Promise<number | undefined> {
-        const progressNotice = this.showNotice("Initializing push");
+        const progressNotice = this.showNotice("プッシュを準備中…");
         return this.withGitOperation(GitOperation.push, async () => {
             try {
                 const status = await this.branchInfo();
@@ -660,7 +660,7 @@ export class IsomorphicGit extends GitManager {
                 if (!currentBranch) {
                     progressNotice?.hide();
                     this.plugin.displayError(
-                        "No current branch found. Cannot push."
+                        "現在のブランチが見つからないため、プッシュできない。"
                     );
                     return undefined;
                 }
@@ -841,7 +841,7 @@ export class IsomorphicGit extends GitManager {
     }
 
     async clone(url: string, dir: string, depth?: number): Promise<void> {
-        const progressNotice = this.showNotice("Initializing clone");
+        const progressNotice = this.showNotice("複製を準備中…");
         try {
             await this.wrapFS(
                 git.clone({
@@ -899,7 +899,7 @@ export class IsomorphicGit extends GitManager {
     }
 
     async fetch(remote?: string): Promise<void> {
-        const progressNotice = this.showNotice("Initializing fetch");
+        const progressNotice = this.showNotice("フェッチを準備中…");
 
         try {
             const args = {
@@ -1247,7 +1247,7 @@ export class IsomorphicGit extends GitManager {
         let notice: Notice | undefined;
         const timeout = window.setTimeout(() => {
             notice = new Notice(
-                "This takes longer: Getting status",
+                "状態の取得に時間がかかっています…",
                 this.noticeLength
             );
         }, 20000);
@@ -1500,7 +1500,7 @@ export class IsomorphicGit extends GitManager {
         const email = await this.getConfig("user.email");
         if (!name || !email) {
             throw Error(
-                "Git author name and email are not set. Please set both fields in the settings."
+                "Gitの作成者名とメールアドレスが未設定です。設定画面で両方を指定してください。"
             );
         }
     }

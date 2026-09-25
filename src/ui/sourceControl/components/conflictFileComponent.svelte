@@ -65,7 +65,7 @@
         <div class="git-tools">
             <div class="buttons">
                 <div
-                    aria-label="Mark resolved"
+                    aria-label="解決済みにする"
                     bind:this={button}
                     onclick={resolve}
                     class="clickable-icon"
@@ -74,7 +74,7 @@
             {#if count === 0}
                 <div
                     class="type resolved"
-                    aria-label="No conflicts left"
+                    aria-label="競合なし"
                     bind:this={resolvedIcon}
                 ></div>
             {:else if count !== undefined}

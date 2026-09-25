@@ -11,7 +11,7 @@ export class BranchModal extends FuzzySuggestModal<string> {
         private readonly branches: string[]
     ) {
         super(plugin.app);
-        this.setPlaceholder("Select branch to checkout");
+        this.setPlaceholder("切り替え先のブランチを選ぶ");
     }
 
     getItems(): string[] {

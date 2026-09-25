@@ -38,7 +38,7 @@ export default class DiffView extends ItemView {
             let fileName = this.state.bFile.split("/").last();
             if (fileName?.endsWith(".md")) fileName = fileName.slice(0, -3);
 
-            return `Diff: ${fileName}`;
+            return `差分：${fileName}`;
         }
         return DIFF_VIEW_CONFIG.name;
     }
@@ -129,7 +129,7 @@ export default class DiffView extends ItemView {
                     });
                     div.createEl("br");
                     div.createSpan({
-                        text: "File not found: " + this.state.bFile,
+                        text: `ファイルが見つからない：「${this.state.bFile}」`,
                     });
                 }
             } finally {

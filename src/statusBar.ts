@@ -1,4 +1,5 @@
 import { setIcon, moment } from "obsidian";
+import { gitProgressText } from "./ui/gitProgressText";
 import type ObsidianGit from "./main";
 import { GitOperation, type GitProgress } from "./types";
 
@@ -107,7 +108,7 @@ export class StatusBar {
         if (this.plugin.state.mergeInProgress) {
             setIcon(this.conflictEl, "git-merge");
             this.conflictEl.ariaLabel =
-                "Merge in progress. Select for help resolving and finishing the merge.";
+                "マージ中。選択すると競合の解決とマージ完了の手順を表示する。";
             this.conflictEl.tabIndex = 0;
             this.conflictEl.style.cursor = "pointer";
             this.conflictEl.style.marginRight = "5px";
@@ -121,8 +122,7 @@ export class StatusBar {
 
         if (this.plugin.localStorage.getPausedAutomatics()) {
             setIcon(this.pausedEl, "pause-circle");
-            this.pausedEl.ariaLabel =
-                "Automatic routines are currently paused.";
+            this.pausedEl.ariaLabel = "自動処理は一時停止中。";
             this.pausedEl.style.marginRight = "5px";
             this.pausedEl.addClass(this.base + "paused");
         } else {
@@ -131,9 +131,8 @@ export class StatusBar {
         }
 
         if (this.progress) {
-            this.statusBarEl.ariaLabel = this.getProgressTooltip(
-                "Git operation in progress..."
-            );
+            this.statusBarEl.ariaLabel =
+                this.getProgressTooltip("Git操作を実行中…");
             setIcon(this.iconEl, this.getProgressIcon());
             this.displayProgressText();
             this.statusBarEl.addClass(this.base + "progress");
@@ -146,43 +145,41 @@ export class StatusBar {
                 this.displayFromNow();
                 break;
             case GitOperation.commit:
-                this.statusBarEl.ariaLabel = "Committing changes...";
+                this.statusBarEl.ariaLabel = "変更をコミット中…";
                 setIcon(this.iconEl, "git-commit");
                 this.textEl.empty();
                 this.statusBarEl.addClass(this.base + "commit");
                 break;
             case GitOperation.push:
                 this.statusBarEl.ariaLabel =
-                    this.getProgressTooltip("Pushing changes...");
+                    this.getProgressTooltip("変更をプッシュ中…");
                 setIcon(this.iconEl, "upload");
                 this.displayProgressText();
                 this.statusBarEl.addClass(this.base + "push");
                 break;
             case GitOperation.pull:
                 this.statusBarEl.ariaLabel =
-                    this.getProgressTooltip("Pulling changes...");
+                    this.getProgressTooltip("変更をプル中…");
                 setIcon(this.iconEl, "download");
                 this.displayProgressText();
                 this.statusBarEl.addClass(this.base + "pull");
                 break;
             case GitOperation.fetch:
-                this.statusBarEl.ariaLabel = this.getProgressTooltip(
-                    "Fetching from remote..."
-                );
+                this.statusBarEl.ariaLabel =
+                    this.getProgressTooltip("リモートからフェッチ中…");
                 setIcon(this.iconEl, "download");
                 this.displayProgressText();
                 this.statusBarEl.addClass(this.base + "fetch");
                 break;
             case GitOperation.checkout:
-                this.statusBarEl.ariaLabel = this.getProgressTooltip(
-                    "Checking out branch..."
-                );
+                this.statusBarEl.ariaLabel =
+                    this.getProgressTooltip("ブランチを切り替え中…");
                 setIcon(this.iconEl, "git-branch");
                 this.displayProgressText();
                 this.statusBarEl.addClass(this.base + "checkout");
                 break;
             default:
-                this.statusBarEl.ariaLabel = "Failed on initialization!";
+                this.statusBarEl.ariaLabel = "初期化に失敗した。";
                 setIcon(this.iconEl, "alert-triangle");
                 this.textEl.empty();
                 this.statusBarEl.addClass(this.base + "failed-init");
@@ -195,7 +192,7 @@ export class StatusBar {
         if (!this.plugin.state.mergeInProgress) return;
 
         const mergeHelp =
-            "Merge in progress. Select the merge icon for help resolving and finishing it.";
+            "マージ中。マージアイコンを選択すると、競合の解決とマージ完了の手順を表示する。";
         const current = this.statusBarEl.ariaLabel;
         this.statusBarEl.ariaLabel = current
             ? `${mergeHelp}\n${current}`
@@ -213,11 +210,13 @@ export class StatusBar {
     private getProgressTooltip(fallback: string): string {
         if (!this.progress) return fallback;
 
-        const stage = this.progress.stage ? `${this.progress.stage}: ` : "";
+        const stage = this.progress.stage
+            ? `${gitProgressText(this.progress.stage)}: `
+            : "";
         if (this.progress.progress === undefined) {
             return this.progress.stage
-                ? `${this.progress.action}: ${this.progress.stage}...`
-                : `${this.progress.action}...`;
+                ? `${gitProgressText(this.progress.action)}: ${gitProgressText(this.progress.stage)}...`
+                : `${gitProgressText(this.progress.action)}...`;
         }
 
         const count =
@@ -225,17 +224,17 @@ export class StatusBar {
             this.progress.total !== undefined
                 ? ` (${this.progress.processed}/${this.progress.total})`
                 : "";
-        return `${this.progress.action}: ${stage}${Math.round(this.progress.progress)}%${count}`;
+        return `${gitProgressText(this.progress.action)}: ${stage}${Math.round(this.progress.progress)}%${count}`;
     }
 
     private getCompactProgressText(): string {
         if (!this.progress) return "";
 
         if (this.progress.progress === undefined) {
-            return `${this.progress.action}...`;
+            return `${gitProgressText(this.progress.action)}...`;
         }
 
-        return `${this.progress.action} ${Math.round(this.progress.progress)}%`;
+        return `${gitProgressText(this.progress.action)} ${Math.round(this.progress.progress)}%`;
     }
 
     private getProgressIcon(): string {
@@ -258,16 +257,16 @@ export class StatusBar {
         if (timestamp) {
             const fromNow = moment(timestamp).fromNow();
             this.statusBarEl.ariaLabel = `${
-                offlineMode ? "Offline: " : ""
-            }Last Commit: ${fromNow}`;
+                offlineMode ? "オフライン：" : ""
+            }最終コミット：${fromNow}`;
 
             if ((this.unPushedCommits ?? 0) > 0) {
-                this.statusBarEl.ariaLabel += `\n(${this.unPushedCommits} unpushed commits)`;
+                this.statusBarEl.ariaLabel += `\n(未プッシュのコミット：「${this.unPushedCommits}」件)`;
             }
         } else {
             this.statusBarEl.ariaLabel = offlineMode
-                ? "Git is offline"
-                : "Git is ready";
+                ? "Gitはオフライン"
+                : "Gitは準備完了";
         }
 
         if (offlineMode) {

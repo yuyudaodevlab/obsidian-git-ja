@@ -43,7 +43,7 @@ export function handleContextMenu(
 function addCopyHashMenuItem(commit: CtxMenuCommitInfo, menu: Menu) {
     menu.addItem((item) =>
         item
-            .setTitle("Copy commit hash")
+            .setTitle("コミットハッシュをコピー")
             .setIcon("copy")
             .setSection("obs-git-line-author-copy")
             .onClick((_e) => navigator.clipboard.writeText(commit.hash))
@@ -67,17 +67,16 @@ function addConfigurableLineAuthorSettings(
     const defaultValue = DEFAULT_SETTINGS.lineAuthor[key];
 
     if (key === "showCommitHash") {
-        title = "Show commit hash";
+        title = "コミットハッシュを表示";
         actionNewValue = currentValue;
     } else if (key === "authorDisplay") {
         const showOption = settings.lastShownAuthorDisplay ?? defaultValue;
-        title = "Show author " + (currentlyShown ? currentValue : showOption);
+        title = "作成者名を表示";
         actionNewValue = currentlyShown ? "hide" : showOption;
     } else if (key === "dateTimeFormatOptions") {
         const showOption =
             settings.lastShownDateTimeFormatOptions ?? defaultValue;
-        title = "Show " + (currentlyShown ? currentValue : showOption);
-        title += !title.contains("date") ? " date" : "";
+        title = "作成日時を表示";
         actionNewValue = currentlyShown ? "hide" : showOption;
     } else {
         impossibleBranch(key);

@@ -243,7 +243,7 @@ describe("SimpleGit.pull", () => {
 
         expect(changes).toBeUndefined();
         expect(plugin.displayError).toHaveBeenCalledWith(
-            "No current branch found. Cannot pull."
+            "現在のブランチが見つからないため、プルできない。"
         );
         expect(fetch).not.toHaveBeenCalled();
         expect(plugin.setPluginState.mock.calls).toEqual([
@@ -384,7 +384,7 @@ describe("SimpleGit.push", () => {
 
         expect(changedFiles).toBeUndefined();
         expect(plugin.displayError).toHaveBeenCalledWith(
-            "No current branch found. Cannot push."
+            "現在のブランチが見つからないため、プッシュできない。"
         );
         expect(push).not.toHaveBeenCalled();
         expect(plugin.setPluginState.mock.calls).toEqual([

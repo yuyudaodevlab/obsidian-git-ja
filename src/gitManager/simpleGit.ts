@@ -56,7 +56,7 @@ export class SimpleGit extends GitManager {
                         this.plugin.settings.basePath
                     );
                 } else if (!ignoreError) {
-                    new Notice("ObsidianGit: Base path does not exist");
+                    new Notice("Obsidian Git：基準パスが存在しない。");
                 }
             }
             this.absoluteRepoPath = basePath;
@@ -297,9 +297,7 @@ export class SimpleGit extends GitManager {
                     allowEmpty: true,
                     obscure,
                     placeholder:
-                        data.length > 60
-                            ? "Enter a response to the message."
-                            : data,
+                        data.length > 60 ? "メッセージへの応答を入力" : data,
                 }).openAndGetResult();
                 notice?.hide();
 
@@ -695,7 +693,7 @@ export class SimpleGit extends GitManager {
                 const branchInfo = await this.branchInfo();
                 if (!branchInfo.current) {
                     this.plugin.displayError(
-                        "No current branch found. Cannot pull."
+                        "現在のブランチが見つからないため、プルできない。"
                     );
                     return undefined;
                 }
@@ -819,7 +817,7 @@ export class SimpleGit extends GitManager {
 
                 if (!currentBranch) {
                     this.plugin.displayError(
-                        "No current branch found. Cannot push."
+                        "現在のブランチが見つからないため、プッシュできない。"
                     );
                     return undefined;
                 }

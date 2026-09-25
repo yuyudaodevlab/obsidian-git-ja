@@ -153,14 +153,14 @@ export default class SplitDiffView extends ItemView {
             if (fileName?.endsWith(".md")) fileName = fileName.slice(0, -3);
             let suffix: string;
             if (this.state.bRef == undefined) {
-                suffix = " (Working Tree)";
+                suffix = "（作業ツリー）";
             } else if (this.state.bRef == "") {
                 suffix = " (Index)";
             } else {
                 suffix = "(" + this.state.bRef.substring(0, 7) + ")";
             }
 
-            return `Diff: ${fileName} ${suffix}`;
+            return `差分：${fileName} ${suffix}`;
         }
         return SPLIT_DIFF_VIEW_CONFIG.name;
     }
@@ -303,7 +303,9 @@ export default class SplitDiffView extends ItemView {
         stageButton.addClass("clickable-icon");
         stageButton.setAttr(
             "aria-label",
-            this.state.bRef == undefined ? "Stage hunk" : "Unstage hunk"
+            this.state.bRef == undefined
+                ? "変更ブロックをステージ"
+                : "変更ブロックのステージを解除"
         );
         setIcon(stageButton, this.state.bRef == undefined ? "plus" : "minus");
 
@@ -341,7 +343,7 @@ export default class SplitDiffView extends ItemView {
         if (this.state.bRef == undefined) {
             const resetButton = contentEl.createDiv();
             resetButton.addClass("clickable-icon");
-            resetButton.setAttr("aria-label", "Reset hunk");
+            resetButton.setAttr("aria-label", "変更ブロックを破棄");
             setIcon(resetButton, "undo");
             resetButton.onmousedown = (_) => {
                 const source = this.mergeView!.a;

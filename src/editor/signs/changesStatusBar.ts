@@ -18,7 +18,7 @@ export class ChangesStatusBar {
             statusBarEl.addClass("git-changes-status-bar-colored");
         }
 
-        statusBarEl.setAttr("aria-label", "Git diff of the current editor");
+        statusBarEl.setAttr("aria-label", "現在のエディターのGit差分");
         this.statusBarEl.setAttribute("data-tooltip-position", "top");
         this.view =
             plugin.app.workspace.getActiveViewOfType(MarkdownView) ?? undefined;

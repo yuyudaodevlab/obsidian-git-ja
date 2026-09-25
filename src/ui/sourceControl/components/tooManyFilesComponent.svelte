@@ -13,10 +13,10 @@
         <div class="tree-item nav-file">
             <div
                 class="tree-item-self nav-file-title"
-                aria-label={"And " + (files.length - 500) + " more files"}
+                aria-label={`ほか「${files.length - 500}」ファイル`}
             >
                 <div class="tree-item-inner nav-file-title-content">
-                    {"And " + (files.length - 500) + " more files"}
+                    {`ほか「${files.length - 500}」ファイル`}
                 </div>
             </div>
         </div>

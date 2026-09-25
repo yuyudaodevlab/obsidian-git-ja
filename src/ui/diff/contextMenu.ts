@@ -49,7 +49,7 @@ export const diffContextMenu = EditorView.domEventHandlers({
         const menu = Menu.forEvent(event);
         menu.addItem((item) =>
             item
-                .setTitle("Cut")
+                .setTitle("切り取り")
                 .setIcon("scissors")
                 .setDisabled(!canEdit || selectedText.length === 0)
                 .onClick(async () => {
@@ -59,14 +59,14 @@ export const diffContextMenu = EditorView.domEventHandlers({
         );
         menu.addItem((item) =>
             item
-                .setTitle("Copy")
+                .setTitle("コピー")
                 .setIcon("copy")
                 .setDisabled(selectedText.length === 0)
                 .onClick(() => navigator.clipboard.writeText(selectedText))
         );
         menu.addItem((item) =>
             item
-                .setTitle("Paste")
+                .setTitle("貼り付け")
                 .setIcon("clipboard-paste")
                 .setDisabled(!canEdit)
                 .onClick(async () =>
@@ -75,7 +75,7 @@ export const diffContextMenu = EditorView.domEventHandlers({
         );
         menu.addItem((item) =>
             item
-                .setTitle("Paste as plain text")
+                .setTitle("プレーンテキストとして貼り付け")
                 .setIcon("clipboard-type")
                 .setDisabled(!canEdit)
                 .onClick(async () =>
@@ -84,7 +84,7 @@ export const diffContextMenu = EditorView.domEventHandlers({
         );
         menu.addItem((item) =>
             item
-                .setTitle("Select all")
+                .setTitle("すべて選択")
                 .setIcon("scan")
                 .onClick(() =>
                     view.dispatch({

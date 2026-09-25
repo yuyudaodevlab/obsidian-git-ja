@@ -79,12 +79,12 @@ class ConflictButtonsWidget extends WidgetType {
             cls: "git-conflict-actions-group git-conflict-actions-widget",
         });
         const labels: Partial<Record<ConflictChoice, string>> = {
-            ours: "Keep ours",
-            theirs: "Keep theirs",
-            both: "Keep both",
+            ours: "ローカルを採用",
+            theirs: "取り込む変更を採用",
+            both: "両方を残す",
         };
         if (this.block.base !== undefined) {
-            labels.base = "Keep base";
+            labels.base = "共通の祖先を採用";
         }
         addButtons(root, labels, (choice) =>
             resolveConflict(view, this.block, choice)
@@ -196,17 +196,15 @@ class ConflictPanel implements Panel {
         }
         this.dom.createSpan({
             cls: "git-conflict-panel-label",
-            text: `${blocks.length} conflict${
-                blocks.length === 1 ? "" : "s"
-            } in file`,
+            text: `このファイルの競合：「${blocks.length}」件`,
         });
         const labels: Partial<Record<ConflictChoice, string>> = {
-            ours: "Keep all ours",
-            theirs: "Keep all theirs",
-            both: "Keep both",
+            ours: "すべてローカルを採用",
+            theirs: "すべて取り込む変更を採用",
+            both: "両方を残す",
         };
         if (blocks.every((block) => block.base !== undefined)) {
-            labels.base = "Keep all base";
+            labels.base = "すべて共通の祖先を採用";
         }
         addButtons(
             this.dom.createDiv({ cls: "git-conflict-actions-group" }),

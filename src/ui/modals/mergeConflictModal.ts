@@ -10,49 +10,49 @@ export class MergeConflictModal extends Modal {
         const { contentEl, titleEl } = this;
         const conflicts = this.plugin.cachedStatus?.conflicted ?? [];
 
-        titleEl.setText("Merge in progress");
+        titleEl.setText("マージ中");
         contentEl.addClass("obsidian-git-merge-help");
         contentEl.createEl("p", {
-            text: "Git is combining the version in your vault with changes from another version. The merge must be committed before Obsidian Git can push or resume automatic commits.",
+            text: "Gitが保管庫の内容と別のバージョンの変更を統合しています。プッシュや自動コミットの再開には、マージのコミットが必要です。",
         });
 
         if (conflicts.length > 0) {
-            contentEl.createEl("h3", { text: "Resolve the conflicts" });
+            contentEl.createEl("h3", { text: "競合を解決" });
             contentEl.createEl("p", {
-                text: "Git could not combine some parts automatically. Open each conflicted file and review every highlighted conflict block.",
+                text: "自動で統合できない箇所があります。競合している各ファイルを開き、強調表示されたすべての競合箇所を確認してください。",
             });
 
             const steps = contentEl.createEl("ol");
             steps.createEl("li", {
-                text: "Choose “Keep ours” for your local text, “Keep theirs” for the incoming text, “Keep both”, or edit the block manually.",
+                text: "ローカルの内容を使うなら「ローカルを採用」、取り込む内容を使うなら「取り込む変更を採用」、両方なら「両方を残す」を選びます。直接編集することもできます。",
             });
             steps.createEl("li", {
-                text: "When the file's conflict count reaches zero, select the plus icon next to it to mark it as resolved.",
+                text: "ファイルの競合数が0になったら、横のプラスアイコンを選んで解決済みにします。",
             });
             steps.createEl("li", {
-                text: "Repeat this for every file in the Conflicts section.",
+                text: "「競合」にあるすべてのファイルで同じ操作を繰り返します。",
             });
         } else {
             const resolved = contentEl.createDiv({
                 cls: "obsidian-git-merge-help-resolved",
             });
             resolved.createEl("strong", {
-                text: "All conflicts have been marked as resolved.",
+                text: "すべての競合が解決済みになりました。",
             });
             resolved.createEl("div", {
-                text: "The merge is still active until you commit the staged changes.",
+                text: "ステージ済みの変更をコミットするまで、マージは完了しません。",
             });
         }
 
-        contentEl.createEl("h3", { text: "Finish the merge" });
+        contentEl.createEl("h3", { text: "マージを完了" });
         contentEl.createEl("p", {
-            text: "After the Conflicts section is empty, enter a commit message and commit the staged changes. This finishes the merge. You can then push normally.",
+            text: "「競合」が空になったら、メッセージを入力してステージ済みの変更をコミットします。これでマージが完了します。その後、通常どおりプッシュできます。",
         });
 
         const buttons = contentEl.createDiv({ cls: "modal-button-container" });
         const close = buttons.createEl("button", {
             cls: "mod-cta",
-            text: "Got it",
+            text: "閉じる",
         });
         close.addEventListener("click", () => this.close());
     }

@@ -14,7 +14,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "edit-gitignore",
-        name: "Edit .gitignore",
+        name: ".gitignoreを編集",
         callback: async () => {
             const path = plugin.gitManager.getRelativeVaultPath(".gitignore");
             if (!(await app.vault.adapter.exists(path))) {
@@ -31,7 +31,7 @@ export function addCommmands(plugin: ObsidianGit) {
     });
     plugin.addCommand({
         id: "open-git-view",
-        name: "Open source control view",
+        name: "ソース管理ビューを開く",
         callback: async () => {
             const leafs = app.workspace.getLeavesOfType(
                 SOURCE_CONTROL_VIEW_CONFIG.type
@@ -56,7 +56,7 @@ export function addCommmands(plugin: ObsidianGit) {
     });
     plugin.addCommand({
         id: "open-history-view",
-        name: "Open history view",
+        name: "履歴ビューを開く",
         callback: async () => {
             const leafs = app.workspace.getLeavesOfType(
                 HISTORY_VIEW_CONFIG.type
@@ -82,7 +82,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "open-diff-view",
-        name: "Open diff view",
+        name: "差分ビューを開く",
         checkCallback: (checking) => {
             const file = app.workspace.getActiveFile();
             if (checking) {
@@ -103,7 +103,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "view-file-on-github",
-        name: "Open file on GitHub",
+        name: "GitHubでファイルを開く",
         editorCallback: (editor, { file }) => {
             if (file) return openLineInGitHub(editor, file, plugin.gitManager);
             return undefined;
@@ -112,7 +112,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "view-history-on-github",
-        name: "Open file history on GitHub",
+        name: "GitHubでファイルの履歴を開く",
         editorCallback: (_, { file }) => {
             if (file) return openHistoryInGitHub(file, plugin.gitManager);
             return undefined;
@@ -121,27 +121,27 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "pull",
-        name: "Pull",
+        name: "プル",
         callback: () =>
             plugin.promiseQueue.addTask(() => plugin.pullChangesFromRemote()),
     });
 
     plugin.addCommand({
         id: "fetch",
-        name: "Fetch",
+        name: "フェッチ",
         callback: () => plugin.promiseQueue.addTask(() => plugin.fetch()),
     });
 
     plugin.addCommand({
         id: "switch-to-remote-branch",
-        name: "Switch to remote branch",
+        name: "リモートブランチに切り替える",
         callback: () =>
             plugin.promiseQueue.addTask(() => plugin.switchRemoteBranch()),
     });
 
     plugin.addCommand({
         id: "add-to-gitignore",
-        name: "Add file to .gitignore",
+        name: "ファイルを.gitignoreに追加",
         checkCallback: (checking) => {
             const file = app.workspace.getActiveFile();
             if (checking) {
@@ -157,7 +157,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "push",
-        name: "Commit-and-sync",
+        name: "コミットと同期",
         callback: () =>
             plugin.promiseQueue.addTask(() =>
                 plugin.commitAndSync({ fromAutoBackup: false })
@@ -166,7 +166,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "backup-and-close",
-        name: "Commit-and-sync and then close Obsidian",
+        name: "コミットと同期を実行してObsidianを閉じる",
         callback: () =>
             plugin.promiseQueue.addTask(async () => {
                 await plugin.commitAndSync({ fromAutoBackup: false });
@@ -176,7 +176,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "commit-push-specified-message",
-        name: "Commit-and-sync with specific message",
+        name: "メッセージを指定してコミットと同期",
         callback: () =>
             plugin.promiseQueue.addTask(() =>
                 plugin.commitAndSync({
@@ -188,7 +188,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "commit",
-        name: "Commit all changes",
+        name: "すべての変更をコミット",
         callback: () =>
             plugin.promiseQueue.addTask(() =>
                 plugin.commit({ fromAuto: false, mode: "all" })
@@ -197,7 +197,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "commit-specified-message",
-        name: "Commit all changes with specific message",
+        name: "メッセージを指定してすべての変更をコミット",
         callback: () =>
             plugin.promiseQueue.addTask(() =>
                 plugin.commit({
@@ -210,7 +210,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "commit-smart",
-        name: "Commit",
+        name: "コミット",
         callback: () =>
             plugin.promiseQueue.addTask(() =>
                 plugin.commit({
@@ -223,7 +223,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "commit-staged",
-        name: "Commit staged",
+        name: "ステージ済みの変更をコミット",
         callback: () =>
             plugin.promiseQueue.addTask(() =>
                 plugin.commit({
@@ -236,7 +236,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "commit-amend-staged-specified-message",
-        name: "Amend staged",
+        name: "ステージ済みの変更で直前のコミットを修正",
         callback: () =>
             plugin.promiseQueue.addTask(() =>
                 plugin.commit({
@@ -250,7 +250,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "commit-smart-specified-message",
-        name: "Commit with specific message",
+        name: "メッセージを指定してコミット",
         callback: () =>
             plugin.promiseQueue.addTask(() =>
                 plugin.commit({
@@ -263,7 +263,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "commit-staged-specified-message",
-        name: "Commit staged with specific message",
+        name: "メッセージを指定してステージ済みの変更をコミット",
         callback: () =>
             plugin.promiseQueue.addTask(() =>
                 plugin.commit({
@@ -276,13 +276,13 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "push2",
-        name: "Push",
+        name: "プッシュ",
         callback: () => plugin.promiseQueue.addTask(() => plugin.push()),
     });
 
     plugin.addCommand({
         id: "stage-current-file",
-        name: "Stage current file",
+        name: "現在のファイルをステージ",
         checkCallback: (checking) => {
             const file = app.workspace.getActiveFile();
             if (checking) {
@@ -296,7 +296,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "unstage-current-file",
-        name: "Unstage current file",
+        name: "現在のファイルのステージを解除",
         checkCallback: (checking) => {
             const file = app.workspace.getActiveFile();
             if (checking) {
@@ -310,81 +310,82 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "edit-remotes",
-        name: "Edit remotes",
+        name: "リモートを編集",
         callback: () =>
             plugin.editRemotes().catch((e) => plugin.displayError(e)),
     });
 
     plugin.addCommand({
         id: "remove-remote",
-        name: "Remove remote",
+        name: "リモートを削除",
         callback: () =>
             plugin.removeRemote().catch((e) => plugin.displayError(e)),
     });
 
     plugin.addCommand({
         id: "set-upstream-branch",
-        name: "Set upstream branch",
+        name: "上流ブランチを設定",
         callback: () =>
             plugin.setUpstreamBranch().catch((e) => plugin.displayError(e)),
     });
 
     plugin.addCommand({
         id: "delete-repo",
-        name: "CAUTION: Delete repository",
+        name: "注意：リポジトリーを削除",
         callback: async () => {
             const repoExists = await app.vault.adapter.exists(
                 `${plugin.settings.basePath}/.git`
             );
             if (repoExists) {
                 const modal = new GeneralModal(plugin, {
-                    options: ["NO", "YES"],
+                    options: ["いいえ", "はい"],
                     placeholder:
-                        "Do you really want to delete the repository (.git directory)? plugin action cannot be undone.",
+                        "リポジトリー（.gitディレクトリー）を削除しますか？この操作は取り消せません。",
                     onlySelection: true,
                 });
-                const shouldDelete = (await modal.openAndGetResult()) === "YES";
+                const shouldDelete =
+                    (await modal.openAndGetResult()) === "はい";
                 if (shouldDelete) {
                     await app.vault.adapter.rmdir(
                         `${plugin.settings.basePath}/.git`,
                         true
                     );
                     new Notice(
-                        "Successfully deleted repository. Reloading plugin..."
+                        "リポジトリーを削除しました。プラグインを再読み込み中…"
                     );
                     plugin.unloadPlugin();
                     await plugin.init({ fromReload: true });
                 }
             } else {
-                new Notice("No repository found");
+                new Notice("リポジトリーが見つからない。");
             }
         },
     });
 
     plugin.addCommand({
         id: "init-repo",
-        name: "Initialize a new repo",
+        name: "新しいリポジトリーを初期化",
         callback: () =>
             plugin.createNewRepo().catch((e) => plugin.displayError(e)),
     });
 
     plugin.addCommand({
         id: "clone-repo",
-        name: "Clone an existing remote repo",
+        name: "リモートリポジトリーを複製",
         callback: () =>
             plugin.cloneNewRepo().catch((e) => plugin.displayError(e)),
     });
 
     plugin.addCommand({
         id: "list-changed-files",
-        name: "List changed files",
+        name: "変更ファイルの一覧を表示",
         callback: async () => {
             if (!(await plugin.isAllInitialized())) return;
 
             try {
                 const status = await plugin.updateCachedStatus();
                 if (status.changed.length + status.staged.length > 500) {
-                    plugin.displayError("Too many changes to display");
+                    plugin.displayError("変更が多すぎるため表示できない。");
                     return;
                 }
 
@@ -397,7 +398,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "switch-branch",
-        name: "Switch branch",
+        name: "ブランチを切り替える",
         callback: () => {
             plugin.switchBranch().catch((e) => plugin.displayError(e));
         },
@@ -405,7 +406,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "create-branch",
-        name: "Create new branch",
+        name: "新しいブランチを作成",
         callback: () => {
             plugin.createBranch().catch((e) => plugin.displayError(e));
         },
@@ -413,7 +414,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "delete-branch",
-        name: "Delete branch",
+        name: "ブランチを削除",
         callback: () => {
             plugin.deleteBranch().catch((e) => plugin.displayError(e));
         },
@@ -421,15 +422,17 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "discard-all",
-        name: "CAUTION: Discard all changes",
+        name: "注意：すべての変更を破棄",
         callback: async () => {
             const res = await plugin.discardAll();
             switch (res) {
                 case "discard":
-                    new Notice("Discarded all changes in tracked files.");
+                    new Notice("追跡済みファイルのすべての変更を破棄した。");
                     break;
                 case "delete":
-                    new Notice("Discarded all files.");
+                    new Notice(
+                        "すべてのファイルの変更を破棄し、未追跡ファイルを削除した。"
+                    );
                     break;
                 case false:
                     break;
@@ -441,23 +444,23 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "pause-automatic-routines",
-        name: "Pause/Resume automatic routines",
+        name: "自動処理を一時停止／再開",
         callback: () => {
             const pause = !plugin.localStorage.getPausedAutomatics();
             plugin.localStorage.setPausedAutomatics(pause);
             if (pause) {
                 plugin.automaticsManager.unload();
-                new Notice(`Paused automatic routines.`);
+                new Notice(`自動処理を一時停止した。`);
             } else {
                 plugin.automaticsManager.reload("commit", "push", "pull");
-                new Notice(`Resumed automatic routines.`);
+                new Notice(`自動処理を再開した。`);
             }
         },
     });
 
     plugin.addCommand({
         id: "raw-command",
-        name: "Raw command",
+        name: "Gitコマンドを直接実行",
         checkCallback: (checking) => {
             const gitManager = plugin.gitManager;
             if (checking) {
@@ -474,7 +477,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "toggle-line-author-info",
-        name: "Toggle line author information",
+        name: "行ごとの作成者情報の表示を切り替える",
         callback: () =>
             plugin.settingsTab?.configureLineAuthorShowStatus(
                 !plugin.settings.lineAuthor.show
@@ -483,7 +486,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "reset-hunk",
-        name: "Reset hunk",
+        name: "変更ブロックを破棄",
         editorCheckCallback(checking, _, __) {
             if (checking) {
                 return (
@@ -499,7 +502,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "stage-hunk",
-        name: "Stage hunk",
+        name: "変更ブロックをステージ",
         editorCheckCallback: (checking, _, __) => {
             if (checking) {
                 return (
@@ -514,7 +517,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "preview-hunk",
-        name: "Preview hunk",
+        name: "変更ブロックをプレビュー",
         editorCheckCallback: (checking, _, __) => {
             if (checking) {
                 return (
@@ -530,7 +533,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "next-hunk",
-        name: "Go to next hunk",
+        name: "次の変更ブロックに移動",
         editorCheckCallback: (checking, _, __) => {
             if (checking) {
                 return (
@@ -545,7 +548,7 @@ export function addCommmands(plugin: ObsidianGit) {
 
     plugin.addCommand({
         id: "prev-hunk",
-        name: "Go to previous hunk",
+        name: "前の変更ブロックに移動",
         editorCheckCallback: (checking, _, __) => {
             if (checking) {
                 return (
